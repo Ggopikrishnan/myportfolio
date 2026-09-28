@@ -36,6 +36,8 @@
 }
 
 .project-card {
+  position: relative;
+  cursor: pointer;
   min-width: 0;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -87,8 +89,25 @@
   text-decoration: none;
 }
 
-.project-card__link:hover {
+.project-card__link:hover,
+.project-card:hover .project-card__link {
   color: var(--accent-ink);
+}
+
+/* Stretch the case-study link over the whole card so any click opens it. */
+.project-card__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.project-card__link:focus-visible {
+  outline: none;
+}
+
+.project-card:has(.project-card__link:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 @media (max-width: 780px) {
