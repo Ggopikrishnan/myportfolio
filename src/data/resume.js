@@ -303,7 +303,7 @@ export const projects = [
     category: 'mobile',
     tagline: 'Taxi booking platform',
     description:
-      'A taxi booking platform similar to Rapido, connecting riders with nearby captains for on-demand bike, auto and cab rides. The admin web portal runs day-to-day operations — live ride monitoring, a captain map, KYC-based captain onboarding, fare configuration per vehicle category, and real-time support chat.',
+      'A taxi booking platform similar to Rapido, connecting riders with nearby captains for on-demand bike, auto and cab rides. The admin web portal runs day-to-day operations — live ride monitoring, a captain map, KYC-based captain onboarding, fare configuration per vehicle category, and real-time support chat. The customer and captain mobile apps are coming soon.',
     contribution: ['Full contribution details coming soon.'],
     features: [
       'Ride operations dashboard: active rides, pending requests, completed rides, fare and commission revenue',
@@ -318,7 +318,7 @@ export const projects = [
     stack: [],
     galleries: [
       {
-        label: 'Dashboard & Live Operations',
+        label: 'Admin Portal — Dashboard & Live Operations',
         frame: 'browser',
         images: [
           { src: 'ridex-admin/01-dashboard.png', caption: 'Ride operations dashboard' },
@@ -328,7 +328,7 @@ export const projects = [
         ],
       },
       {
-        label: 'Captain Onboarding & KYC',
+        label: 'Admin Portal — Captain Onboarding & KYC',
         frame: 'browser',
         images: [
           { src: 'ridex-admin/05-captains.png', caption: 'Captain roster' },
@@ -340,7 +340,7 @@ export const projects = [
         ],
       },
       {
-        label: 'Fleet, Pricing & Master Data',
+        label: 'Admin Portal — Fleet, Pricing & Master Data',
         frame: 'browser',
         images: [
           { src: 'ridex-admin/11-vehicles-pricing.png', caption: 'Vehicle categories & fare pricing' },
@@ -350,6 +350,20 @@ export const projects = [
           { src: 'ridex-admin/15-vehicle-brands.png', caption: 'Vehicle brands' },
           { src: 'ridex-admin/16-vehicle-categories.png', caption: 'Vehicle categories' },
         ],
+      },
+      {
+        label: 'Customer App',
+        frame: 'phone',
+        comingSoon: true,
+        note: 'Rider app for booking bike, auto and cab rides — screenshots coming soon.',
+        images: [],
+      },
+      {
+        label: 'Captain App',
+        frame: 'phone',
+        comingSoon: true,
+        note: 'Driver app for captain self-registration, KYC and accepting ride requests — screenshots coming soon.',
+        images: [],
       },
     ],
   },

@@ -36,6 +36,12 @@ export default function ProjectGallery({ galleries }) {
       {galleries.map((gallery, gi) => (
         <div key={gallery.label} className="project-gallery__section">
           <p className="project-gallery__label">{gallery.label}</p>
+          {gallery.comingSoon && (
+            <div className="project-gallery__soon">
+              <span className="project-gallery__soon-badge">Coming soon</span>
+              <p>{gallery.note || 'Screenshots will be added here soon.'}</p>
+            </div>
+          )}
           <div className={`project-gallery__grid project-gallery__grid--${gallery.frame}`}>
             {gallery.images.map((img, ii) => (
               <button

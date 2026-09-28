@@ -69,6 +69,34 @@
   color: var(--text-muted);
 }
 
+.project-gallery__soon {
+  margin-top: 18px;
+  padding: 28px 24px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background: var(--surface-2);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.project-gallery__soon p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.project-gallery__soon-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
 /* --- lightbox --- */
 
 .lightbox {
