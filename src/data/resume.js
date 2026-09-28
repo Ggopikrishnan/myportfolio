@@ -303,11 +303,55 @@ export const projects = [
     category: 'mobile',
     tagline: 'Taxi booking platform',
     description:
-      'A taxi booking platform similar to Rapido, connecting riders with nearby drivers for on-demand rides. Full case study write-up coming soon.',
+      'A taxi booking platform similar to Rapido, connecting riders with nearby captains for on-demand bike, auto and cab rides. The admin web portal runs day-to-day operations — live ride monitoring, a captain map, KYC-based captain onboarding, fare configuration per vehicle category, and real-time support chat.',
     contribution: ['Full contribution details coming soon.'],
-    features: ['Full feature list coming soon.'],
+    features: [
+      'Ride operations dashboard: active rides, pending requests, completed rides, fare and commission revenue',
+      'Live ride-request queue with pickup/drop locations, fare and ride status',
+      'Captain map with a 4-tier location filter (Country → State → City → Zone) and availability status',
+      'Three-step captain onboarding wizard: personal KYC, vehicle specs and location zone',
+      'KYC review queue with masked Aadhaar, document checks and approve/reject actions',
+      'Per-category fare pricing: base fare, rate per km and per minute, minimum fare and capacity',
+      'Real-time support chat with captains and customers',
+      'Master data for location hierarchy, vehicle brands and vehicle categories that feeds every form and filter',
+    ],
     stack: [],
-    galleries: [],
+    galleries: [
+      {
+        label: 'Dashboard & Live Operations',
+        frame: 'browser',
+        images: [
+          { src: 'ridex-admin/01-dashboard.png', caption: 'Ride operations dashboard' },
+          { src: 'ridex-admin/02-live-ride-queue.png', caption: 'Live ride requests & completion rates' },
+          { src: 'ridex-admin/03-captain-map.png', caption: 'Captain map with 4-tier location filter' },
+          { src: 'ridex-admin/04-support-chats.png', caption: 'Real-time support chats' },
+        ],
+      },
+      {
+        label: 'Captain Onboarding & KYC',
+        frame: 'browser',
+        images: [
+          { src: 'ridex-admin/05-captains.png', caption: 'Captain roster' },
+          { src: 'ridex-admin/06-onboard-wizard-kyc.png', caption: 'Onboarding wizard — personal KYC' },
+          { src: 'ridex-admin/07-onboard-wizard-vehicle.png', caption: 'Onboarding wizard — vehicle specs' },
+          { src: 'ridex-admin/08-onboard-queue-pending.png', caption: 'Onboard queue — pending review' },
+          { src: 'ridex-admin/09-kyc-review.png', caption: 'KYC application review' },
+          { src: 'ridex-admin/10-onboard-queue-approved.png', caption: 'Onboard queue — approved captains' },
+        ],
+      },
+      {
+        label: 'Fleet, Pricing & Master Data',
+        frame: 'browser',
+        images: [
+          { src: 'ridex-admin/11-vehicles-pricing.png', caption: 'Vehicle categories & fare pricing' },
+          { src: 'ridex-admin/12-edit-vehicle-rates.png', caption: 'Edit vehicle category rates' },
+          { src: 'ridex-admin/13-customers.png', caption: 'Customers' },
+          { src: 'ridex-admin/14-location-hierarchy.png', caption: 'Location hierarchy — country to zone' },
+          { src: 'ridex-admin/15-vehicle-brands.png', caption: 'Vehicle brands' },
+          { src: 'ridex-admin/16-vehicle-categories.png', caption: 'Vehicle categories' },
+        ],
+      },
+    ],
   },
   {
     key: 'food-ordering',

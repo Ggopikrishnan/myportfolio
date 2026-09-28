@@ -28,3 +28,6 @@ dist-ssr
 WhatsApp Image *.jpeg
 Arun_Kumar R (1).pdf
 Arun_Kumar-R.pdf
+
+# Ridex screenshots left out of the gallery (duplicates / unmasked KYC data)
+src/assets/ridex-admin/Screenshot *.png
