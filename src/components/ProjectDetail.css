@@ -56,8 +56,11 @@
   gap: 8px;
 }
 
-.project-detail__github {
+.project-detail__links {
   margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .project-detail__grid {
@@ -67,7 +70,16 @@
   gap: 32px;
 }
 
-.project-detail__grid h4 {
+.project-detail__highlights {
+  margin-top: 48px;
+}
+
+.project-detail__highlights strong {
+  color: var(--text);
+}
+
+.project-detail__grid h4,
+.project-detail__highlights h4 {
   font-size: 1.05rem;
 }
 

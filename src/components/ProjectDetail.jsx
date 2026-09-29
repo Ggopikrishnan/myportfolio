@@ -1,5 +1,5 @@
 import { profile } from '../data/resume'
-import { IconArrowLeft, IconCheck, IconGithub } from './Icons'
+import { IconArrowLeft, IconArrowRight, IconCheck, IconGithub } from './Icons'
 import ProjectThumb from './ProjectThumb'
 import ProjectGallery from './ProjectGallery'
 import './ProjectDetail.css'
@@ -28,15 +28,18 @@ export default function ProjectDetail({ project, onBack }) {
             ))}
           </div>
 
-          <a
-            className="btn btn--ghost project-detail__github"
-            href={profile.github}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <IconGithub />
-            View on GitHub
-          </a>
+          <div className="project-detail__links">
+            {project.live && (
+              <a className="btn btn--primary" href={project.live} target="_blank" rel="noreferrer">
+                Live Demo
+                <IconArrowRight />
+              </a>
+            )}
+            <a className="btn btn--ghost" href={project.github || profile.github} target="_blank" rel="noreferrer">
+              <IconGithub />
+              View on GitHub
+            </a>
+          </div>
         </div>
       </div>
 
@@ -64,6 +67,22 @@ export default function ProjectDetail({ project, onBack }) {
           </ul>
         </div>
       </div>
+
+      {project.highlights && (
+        <div className="project-detail__highlights">
+          <h4>Engineering Highlights</h4>
+          <ul className="project-detail__list">
+            {project.highlights.map((item) => (
+              <li key={item.title}>
+                <IconCheck className="project-detail__check" />
+                <span>
+                  <strong>{item.title}</strong> {item.text}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <ProjectGallery galleries={project.galleries} />
     </div>

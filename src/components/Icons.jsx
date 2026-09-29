@@ -60,6 +60,14 @@ export function IconArrowRight(props) {
   )
 }
 
+export function IconExternal(props) {
+  return (
+    <svg viewBox="0 0 24 24" width="15" height="15" {...base} {...props}>
+      <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+    </svg>
+  )
+}
+
 export function IconArrowLeft(props) {
   return (
     <svg viewBox="0 0 24 24" width="16" height="16" {...base} {...props}>

@@ -73,28 +73,60 @@
   gap: 8px;
 }
 
-.project-card__link {
+.project-card__actions {
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Both actions share one pill shape so they line up exactly. */
+.project-card__link,
+.project-card__live {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  align-self: flex-start;
-  background: none;
-  border: none;
-  color: var(--accent);
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-family: inherit;
   font-weight: 700;
-  font-size: 0.9rem;
-  cursor: pointer;
-  padding: 0;
+  font-size: 0.88rem;
+  line-height: 1;
   text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.project-card__link {
+  background: var(--accent);
+  color: #fff;
 }
 
 .project-card__link:hover,
 .project-card:hover .project-card__link {
-  color: var(--accent-ink);
+  background: color-mix(in srgb, var(--accent) 85%, #000);
+  color: #fff;
 }
 
-/* Stretch the case-study link over the whole card so any click opens it. */
+/* Sits above the stretched project-details link so it stays clickable on its own. */
+.project-card__live {
+  position: relative;
+  z-index: 1;
+  background: var(--accent-soft);
+  border-color: var(--border);
+  color: var(--accent);
+}
+
+.project-card__live:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Stretch the project-details link over the whole card so any click opens it. */
 .project-card__link::after {
   content: '';
   position: absolute;

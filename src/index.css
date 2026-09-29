@@ -144,8 +144,14 @@ textarea {
 }
 
 .section {
-  padding: 96px 0;
+  padding: 56px 0;
   border-top: 1px solid var(--border);
+}
+
+@media (max-width: 780px) {
+  .section {
+    padding: 44px 0;
+  }
 }
 
 .section__head h2 {

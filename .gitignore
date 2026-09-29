@@ -22,7 +22,6 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
 
 # Personal source files not used by the site
 WhatsApp Image *.jpeg
@@ -31,3 +30,4 @@ Arun_Kumar-R.pdf
 
 # Ridex screenshots left out of the gallery (duplicates / unmasked KYC data)
 src/assets/ridex-admin/Screenshot *.png
+src/assets/arsha-mart/Screenshot *.png

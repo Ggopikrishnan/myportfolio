@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { projects, projectCategories } from '../data/resume'
-import { IconArrowRight } from './Icons'
+import { IconArrowRight, IconExternal } from './Icons'
 import ProjectThumb from './ProjectThumb'
 import Reveal from './Reveal'
 import './Projects.css'
@@ -48,10 +48,23 @@ export default function Projects() {
                 ))}
               </div>
 
-              <Link to={`/projects/${project.key}`} className="project-card__link">
-                View Case Study
-                <IconArrowRight />
-              </Link>
+              <div className="project-card__actions">
+                <Link to={`/projects/${project.key}`} className="project-card__link">
+                  View Project Details
+                  <IconArrowRight />
+                </Link>
+                {project.live && (
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="project-card__live"
+                  >
+                    Live Demo
+                    <IconExternal />
+                  </a>
+                )}
+              </div>
             </Reveal>
           ))}
         </div>
