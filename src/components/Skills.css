@@ -5,55 +5,124 @@
   gap: 20px;
 }
 
+/* Each card takes its colour from --group, set per category in Skills.jsx. */
 .skill-group {
-  background: var(--surface);
+  --group: var(--accent);
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 60% at 100% 0%, color-mix(in srgb, var(--group) 12%, transparent), transparent 60%),
+    var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 26px 28px;
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.skill-group::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--group), color-mix(in srgb, var(--group) 30%, transparent));
+}
+
+.skill-group.reveal--visible {
+  transition:
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.skill-group:hover {
+  border-color: color-mix(in srgb, var(--group) 40%, var(--border));
+  box-shadow: 0 18px 40px -24px color-mix(in srgb, var(--group) 70%, transparent);
 }
 
 .skill-group__head {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .skill-group__icon {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 11px;
-  background: var(--accent-soft);
-  color: var(--accent);
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--group), color-mix(in srgb, var(--group) 65%, #000));
+  box-shadow: 0 10px 22px -10px var(--group);
 }
 
 .skill-group__head h3 {
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
-.skill-group__list {
-  margin: 18px 0 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.skill-group__list li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.9rem;
+.skill-group__count {
+  margin-top: 2px;
+  font-size: 0.78rem;
+  font-weight: 600;
   color: var(--text-muted);
 }
 
-.skill-group__check {
+.skill-group__chips {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* --brand is the logo colour; chips without one fall back to the group colour. */
+.skill-chip {
+  --brand: var(--group);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.skill-chip:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--brand) 55%, var(--border));
+  box-shadow: 0 8px 18px -12px var(--brand);
+}
+
+.skill-chip__logo {
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
-  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand) 14%, var(--surface));
+}
+
+.skill-chip__initial {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--group);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-chip,
+  .skill-chip:hover {
+    transition: none;
+    transform: none;
+  }
 }
 
 @media (max-width: 860px) {
@@ -65,5 +134,9 @@
 @media (max-width: 560px) {
   .skills-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .skill-group {
+    padding: 20px;
   }
 }
