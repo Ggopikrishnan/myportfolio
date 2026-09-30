@@ -239,6 +239,7 @@ export const projects = [
   {
     key: 'ridex',
     name: 'Ridex',
+    live: 'https://ridex-admin.vercel.app',
     category: 'mobile',
     tagline: 'Taxi booking platform',
     description:
