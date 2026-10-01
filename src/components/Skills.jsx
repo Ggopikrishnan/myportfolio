@@ -81,15 +81,6 @@ const SKILL_ICON = {
   'Microsoft Azure (learning)': { glyph: GLYPH.cloud, hex: '0078D4' },
 }
 
-const GROUP_COLOR = {
-  frontend: '#3b82f6',
-  backend: '#22c55e',
-  database: '#f59e0b',
-  mobile: '#8b5cf6',
-  devops: '#06b6d4',
-  other: '#ec4899',
-}
-
 const GROUP_ICON = {
   frontend: 'M3 6.5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z M8 20h8M12 16.5V20',
   backend:
@@ -101,7 +92,7 @@ const GROUP_ICON = {
   other: 'M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7Z',
 }
 
-// Near-black logos (Next.js, Express, GitHub…) would vanish on a dark card, so they use the text colour.
+// Near-black logos (Next.js, Express, GitHub…) would vanish on a dark card, so they hover to the text colour.
 function isDark(hex) {
   const n = parseInt(hex, 16)
   const r = n >> 16
@@ -116,14 +107,12 @@ function SkillLogo({ name }) {
     return <span className="skill-chip__initial">{name[0]}</span>
   }
 
-  const color = isDark(icon.hex) ? 'var(--text)' : `#${icon.hex}`
   return (
     <svg
       viewBox="0 0 24 24"
-      width="18"
-      height="18"
+      width="16"
+      height="16"
       aria-hidden="true"
-      style={{ color }}
       {...(icon.glyph
         ? { fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' }
         : { fill: 'currentColor' })}
@@ -133,9 +122,10 @@ function SkillLogo({ name }) {
   )
 }
 
-function brandTint(name) {
+// Logos show in a muted tone and take their brand colour on hover.
+function brandColor(name) {
   const icon = SKILL_ICON[name]
-  if (!icon || isDark(icon.hex)) return undefined
+  if (!icon || isDark(icon.hex)) return 'var(--text)'
   return `#${icon.hex}`
 }
 
@@ -155,14 +145,13 @@ export default function Skills() {
               key={group.key}
               className="skill-group"
               delay={i * 60}
-              style={{ '--group': GROUP_COLOR[group.key] }}
             >
               <div className="skill-group__head">
                 <span className="skill-group__icon">
                   <svg
                     viewBox="0 0 24 24"
-                    width="20"
-                    height="20"
+                    width="18"
+                    height="18"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.8"
@@ -173,22 +162,13 @@ export default function Skills() {
                     <path d={GROUP_ICON[group.key]} />
                   </svg>
                 </span>
-                <div>
-                  <h3>{group.label}</h3>
-                  <p className="skill-group__count">{group.items.length} skills</p>
-                </div>
+                <h3>{group.label}</h3>
               </div>
 
               <ul className="skill-group__chips">
                 {group.items.map((item) => (
-                  <li
-                    key={item}
-                    className="skill-chip"
-                    style={brandTint(item) ? { '--brand': brandTint(item) } : undefined}
-                  >
-                    <span className="skill-chip__logo">
-                      <SkillLogo name={item} />
-                    </span>
+                  <li key={item} className="skill-chip" style={{ '--brand': brandColor(item) }}>
+                    <SkillLogo name={item} />
                     {item}
                   </li>
                 ))}
