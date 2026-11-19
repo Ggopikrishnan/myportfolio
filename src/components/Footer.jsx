@@ -17,12 +17,16 @@ export default function Footer() {
 
         <div className="footer__meta">
           <div className="footer__social">
-            <a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub">
-              <IconGithub />
-            </a>
-            <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
-              <IconLinkedIn />
-            </a>
+            {profile.github && (
+              <a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+                <IconGithub />
+              </a>
+            )}
+            {profile.linkedin && (
+              <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <IconLinkedIn />
+              </a>
+            )}
             <a href={gmailComposeHref(profile.email)} target="_blank" rel="noreferrer" aria-label="Email">
               <IconMail />
             </a>

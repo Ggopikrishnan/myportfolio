@@ -22,7 +22,7 @@ export default function Experience() {
         <div className="exp-layout">
           <div className="timeline">
             {experience.map((job, i) => (
-              <Reveal as="div" key={job.company} className="timeline-item" delay={i * 90}>
+              <Reveal as="div" key={job.company} className="timeline-item" variant="swing" delay={i * 140}>
                 <div className="timeline-item__date">
                   {job.start} – {job.end}
                 </div>
@@ -50,7 +50,7 @@ export default function Experience() {
             <p className="education__heading">Education</p>
             <div className="education__list">
               {education.map((item, i) => (
-                <Reveal as="div" key={item.degree} className="education__item" delay={i * 70}>
+                <Reveal as="div" key={item.degree} className="education__item" variant="flip-x" delay={i * 120}>
                   <span className="education__icon">{CAP_ICON}</span>
                   <div>
                     <h4>{item.degree}</h4>

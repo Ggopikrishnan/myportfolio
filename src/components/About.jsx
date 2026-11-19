@@ -1,9 +1,12 @@
 import { profile, featureCards } from '../data/resume'
 import { IconLocation, IconBriefcase, IconMail, IconClock } from './Icons'
 import Reveal from './Reveal'
+import { useTilt } from '../hooks/useTilt'
 import './About.css'
 
 export default function About() {
+  const tilt = useTilt(14)
+
   return (
     <section id="about" className="section">
       <div className="container">
@@ -52,7 +55,14 @@ export default function About() {
 
         <div className="feature-grid">
           {featureCards.map((card, i) => (
-            <Reveal as="div" key={card.key} className="feature-card" delay={i * 70}>
+            <Reveal
+              as="div"
+              key={card.key}
+              className="feature-card tilt-3d"
+              variant="card-flip"
+              delay={i * 150}
+              {...tilt}
+            >
               <span className="feature-card__dot" aria-hidden="true" />
               <h3>{card.title}</h3>
               <p>{card.text}</p>

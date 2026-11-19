@@ -1,5 +1,5 @@
 import { profile } from '../data/resume'
-import { IconArrowLeft, IconArrowRight, IconCheck, IconGithub } from './Icons'
+import { IconArrowLeft, IconArrowRight, IconCheck, IconGithub, IconGooglePlay } from './Icons'
 import ProjectThumb from './ProjectThumb'
 import ProjectGallery from './ProjectGallery'
 import './ProjectDetail.css'
@@ -35,10 +35,18 @@ export default function ProjectDetail({ project, onBack }) {
                 <IconArrowRight />
               </a>
             )}
-            <a className="btn btn--ghost" href={project.github || profile.github} target="_blank" rel="noreferrer">
-              <IconGithub />
-              View on GitHub
-            </a>
+            {project.playStore && (
+              <a className="btn btn--primary" href={project.playStore} target="_blank" rel="noreferrer">
+                <IconGooglePlay />
+                Get it on Google Play
+              </a>
+            )}
+            {(project.github || profile.github) && (
+              <a className="btn btn--ghost" href={project.github || profile.github} target="_blank" rel="noreferrer">
+                <IconGithub />
+                View on GitHub
+              </a>
+            )}
           </div>
         </div>
       </div>

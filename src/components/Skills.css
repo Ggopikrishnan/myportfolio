@@ -1,52 +1,203 @@
-.skills-grid {
-  margin-top: 48px;
+/* ================= Skills: marquee + bento cards ================= */
+
+@property --skill-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ---------- Infinite logo marquee ---------- */
+
+.skills-marquee {
+  margin-top: 36px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.skills-marquee__row {
+  display: flex;
+  overflow: hidden;
+}
+
+.skills-marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 12px;
+  padding-right: 12px;
+  animation: skills-marquee 38s linear infinite;
+}
+
+.skills-marquee__row--reverse .skills-marquee__track {
+  animation-direction: reverse;
+  animation-duration: 44s;
+}
+
+.skills-marquee:hover .skills-marquee__track {
+  animation-play-state: paused;
+}
+
+.skills-marquee__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+
+.skills-marquee__pill svg {
+  width: 18px;
+  height: 18px;
+  color: var(--brand);
+}
+
+@keyframes skills-marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- Bento grid ---------- */
+
+.skills-bento {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 20px;
 }
 
-.skill-group {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px;
+.skill-card {
+  --card: var(--accent);
+  grid-column: span 2;
+  isolation: isolate;
+  overflow: visible;
+  padding: 22px;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--card) 22%, var(--border));
+  background:
+    radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--card) 12%, transparent), transparent 60%),
+    var(--surface);
 }
 
-.skill-group.reveal--visible {
-  transition:
-    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.2s ease;
+.skill-card--state,
+.skill-card--backend {
+  grid-column: span 3;
 }
 
-.skill-group:hover {
-  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+/* Animated gradient border: a rotating conic ring masked to the card outline. */
+.skill-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--skill-angle), transparent 0deg, var(--card) 70deg, transparent 140deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  animation: skill-border-spin 4s linear infinite;
+  pointer-events: none;
 }
+
+.skill-card:hover::after {
+  opacity: 1;
+}
+
+@keyframes skill-border-spin {
+  to { --skill-angle: 360deg; }
+}
+
+/* Soft drifting glow in the card's colour. */
+.skill-card__glow {
+  position: absolute;
+  z-index: -1;
+  top: -30px;
+  right: -20px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--card);
+  opacity: 0.16;
+  filter: blur(40px);
+  pointer-events: none;
+  animation: skill-glow 7s ease-in-out infinite alternate;
+}
+
+@keyframes skill-glow {
+  to { transform: translate(-40px, 30px) scale(1.25); }
+}
+
+.skill-card:hover {
+  box-shadow: 0 26px 50px -26px color-mix(in srgb, var(--card) 55%, transparent);
+}
+
+/* ---------- Card head ---------- */
 
 .skill-group__head {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .skill-group__icon {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  background: var(--accent-soft);
-  color: var(--accent);
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--card), color-mix(in srgb, var(--card) 55%, #312e81));
+  box-shadow: 0 10px 22px -10px var(--card);
 }
 
-.skill-group__head h3 {
-  font-size: 1rem;
+.skill-card__title {
+  min-width: 0;
+  flex: 1;
 }
+
+.skill-card__title h3 {
+  font-size: 1.05rem;
+}
+
+.skill-card__title p {
+  margin-top: 2px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.skill-card__count {
+  flex-shrink: 0;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--card);
+  background: color-mix(in srgb, var(--card) 14%, transparent);
+}
+
+/* ---------- Skill tiles ---------- */
 
 .skill-group__chips {
-  margin: 20px 0 0;
+  margin: 18px 0 0;
   padding: 0;
   list-style: none;
   display: flex;
@@ -54,53 +205,180 @@
   gap: 8px;
 }
 
-/* --brand is set per skill in Skills.jsx; the logo only takes it on hover. */
 .skill-chip {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 7px 12px;
-  border-radius: 999px;
+  padding: 5px 12px 5px 5px;
+  border-radius: 12px;
   border: 1px solid var(--border);
-  font-size: 0.86rem;
-  color: var(--text-muted);
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-
-.skill-chip svg {
-  flex-shrink: 0;
-  color: var(--text-muted);
-  transition: color 0.15s ease;
-}
-
-.skill-chip:hover {
-  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  background: var(--surface);
+  font-size: 0.85rem;
+  font-weight: 500;
   color: var(--text);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.skill-chip:hover svg {
+.skill-chip__icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
   color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 14%, transparent);
 }
 
 .skill-chip__initial {
-  width: 16px;
-  text-align: center;
   font-size: 0.75rem;
   font-weight: 700;
 }
 
-@media (max-width: 860px) {
-  .skills-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+.skill-chip:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--brand) 45%, var(--border));
+  box-shadow: 0 10px 20px -12px var(--brand);
+}
+
+.skill-chip:hover svg {
+  animation: skill-logo-wiggle 0.5s ease;
+}
+
+@keyframes skill-logo-wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-14deg) scale(1.15); }
+  75% { transform: rotate(10deg) scale(1.15); }
+}
+
+/* ---------- Entrance animations ---------- */
+
+/* Heading: title letters close in from a blur. */
+.reveal--blur-head {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal--blur-head .eyebrow,
+.reveal--blur-head h2 {
+  opacity: 0;
+}
+
+.reveal--blur-head.reveal--visible .eyebrow {
+  animation: skill-blur-in 0.8s ease-out forwards;
+}
+
+.reveal--blur-head.reveal--visible h2 {
+  animation: skill-track-in 1s 0.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Cards zoom out of a blur, alternating from the left and right. */
+.reveal--zoom {
+  opacity: 0;
+  transform: none;
+}
+
+.skill-card.reveal--zoom.reveal--visible {
+  opacity: 1;
+  animation: skill-zoom 0.9s cubic-bezier(0.34, 1.3, 0.64, 1) backwards;
+  animation-delay: var(--d, 0ms);
+}
+
+.reveal--zoom.reveal--visible .skill-group__icon {
+  animation:
+    skill-icon-spin 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards,
+    skill-icon-float 3.2s ease-in-out infinite;
+  animation-delay: calc(var(--d, 0ms) + 0.25s), calc(var(--d, 0ms) + 1.2s);
+}
+
+/* Tiles bounce in one by one after their card lands. */
+.reveal--zoom.reveal--visible .skill-chip {
+  animation: skill-chip-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation-delay: calc(var(--d, 0ms) + 0.4s + var(--c, 0) * 0.08s);
+}
+
+@keyframes skill-blur-in {
+  from { opacity: 0; filter: blur(8px); }
+  to { opacity: 1; filter: none; }
+}
+
+@keyframes skill-track-in {
+  from { opacity: 0; letter-spacing: 0.35em; filter: blur(10px); }
+  to { opacity: 1; letter-spacing: normal; filter: none; }
+}
+
+@keyframes skill-zoom {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateX(calc(var(--side, 1) * 60px)) scale(0.82) rotate(calc(var(--side, 1) * 3deg));
+  }
+  to { opacity: 1; filter: none; transform: none; }
+}
+
+@keyframes skill-icon-spin {
+  from { opacity: 0; transform: rotate(-200deg) scale(0); }
+}
+
+@keyframes skill-icon-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes skill-chip-pop {
+  from { opacity: 0; transform: scale(0.3) translateY(12px); }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 980px) {
+  .skills-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .skill-card,
+  .skill-card--state,
+  .skill-card--backend {
+    grid-column: span 1;
+  }
+
+  /* Five cards in two columns: let the last one fill its row. */
+  .skill-card--devops {
+    grid-column: span 2;
   }
 }
 
 @media (max-width: 560px) {
-  .skills-grid {
+  .skills-bento {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .skill-group {
-    padding: 20px;
+  .skill-card,
+  .skill-card--devops {
+    grid-column: span 1;
+    padding: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal--blur-head .eyebrow,
+  .reveal--blur-head h2,
+  .reveal--zoom {
+    opacity: 1;
+  }
+
+  .reveal--blur-head *,
+  .reveal--zoom,
+  .reveal--zoom *,
+  .skill-card::after,
+  .skill-card__glow,
+  .skill-chip:hover svg {
+    animation: none !important;
+  }
+
+  /* The marquee is decorative and duplicates the cards below, so drop it rather than freeze it. */
+  .skills-marquee {
+    display: none;
   }
 }

@@ -100,3 +100,10 @@ export function IconLinkedIn(props) {
   )
 }
 
+export function IconGooglePlay(props) {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M3.6 1.8c-.3.3-.5.8-.5 1.4v17.6c0 .6.2 1.1.5 1.4l.1.1 9.9-9.9v-.2L3.7 1.7l-.1.1Zm13.3 13.4-3.3-3.3v-.2l3.3-3.3.1.1 3.9 2.2c1.1.6 1.1 1.7 0 2.3l-3.9 2.2h-.1Zm-.1.1L13.4 12 3.6 22.2c.4.4 1 .4 1.7.1l11.5-7Zm0-6.6L5.3 1.7c-.7-.4-1.3-.3-1.7.1L13.4 12l3.4-3.3Z" />
+    </svg>
+  )
+}

@@ -3,35 +3,35 @@ import { Link } from 'react-router-dom'
 import { profile, experience } from '../data/resume'
 import { IconGithub, IconLinkedIn, IconMail, IconArrowRight } from './Icons'
 import { gmailComposeHref } from '../utils/mail'
-import headshot from '../assets/arun-headshot.jpg'
+import headshot from '../assets/gopi-headshot.webp'
 import './Hero.css'
 
 const DEVICON = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons'
 
 const innerOrbit = [
-  { name: 'Node.js', icon: 'nodejs/nodejs-original.svg' },
-  { name: 'React', icon: 'react/react-original.svg' },
-  { name: 'MongoDB', icon: 'mongodb/mongodb-original.svg' },
-  { name: 'TypeScript', icon: 'typescript/typescript-original.svg' },
+  { name: 'Flutter', icon: 'flutter/flutter-original.svg' },
+  { name: 'Dart', icon: 'dart/dart-original.svg' },
+  { name: 'Firebase', icon: 'firebase/firebase-original.svg' },
+  { name: 'Android', icon: 'android/android-original.svg' },
 ]
 
 const outerOrbit = [
-  { name: 'Express.js', icon: 'express/express-original.svg' },
-  { name: 'PostgreSQL', icon: 'postgresql/postgresql-original.svg' },
-  { name: 'Docker', icon: 'docker/docker-original.svg' },
-  { name: 'AWS', icon: 'amazonwebservices/amazonwebservices-original-wordmark.svg' },
-  { name: 'Next.js', icon: 'nextjs/nextjs-original.svg' },
-  { name: 'MySQL', icon: 'mysql/mysql-original.svg' },
+  { name: 'Google Cloud', icon: 'googlecloud/googlecloud-original.svg' },
+  { name: 'SQLite', icon: 'sqlite/sqlite-original.svg' },
+  { name: 'Socket.IO', icon: 'socketio/socketio-original.svg' },
   { name: 'Git', icon: 'git/git-original.svg' },
+  { name: 'Android Studio', icon: 'androidstudio/androidstudio-original.svg' },
+  { name: 'VS Code', icon: 'vscode/vscode-original.svg' },
+  { name: 'Figma', icon: 'figma/figma-original.svg' },
 ]
 
-const roles = ['Node.js Full Stack Developer', 'Backend API Engineer', 'AI-Integrated App Builder']
+const roles = ['Flutter Developer', 'Mobile App Developer', 'Real-Time App Builder']
 
 const terminalLines = [
   { kind: 'cmd', text: 'ask("what do you build?")' },
-  { kind: 'out', text: 'Scalable REST APIs, ERP systems & LLM-powered features.' },
+  { kind: 'out', text: 'Flutter apps for rides, billing & field service.' },
   { kind: 'cmd', text: 'stack.primary' },
-  { kind: 'out', text: "['Node.js', 'Express', 'React', 'MongoDB']" },
+  { kind: 'out', text: "['Flutter', 'Dart', 'GetX', 'Firebase']" },
 ]
 
 const prefersReducedMotion = () =>
@@ -147,16 +147,28 @@ export default function Hero() {
     const rect = el.getBoundingClientRect()
     el.style.setProperty('--mx', `${e.clientX - rect.left}px`)
     el.style.setProperty('--my', `${e.clientY - rect.top}px`)
+    if (e.pointerType !== 'mouse' || prefersReducedMotion()) return
+    const nx = (e.clientX - rect.left) / rect.width - 0.5
+    const ny = (e.clientY - rect.top) / rect.height - 0.5
+    el.style.setProperty('--hry', `${nx * 16}deg`)
+    el.style.setProperty('--hrx', `${ny * -12}deg`)
+  }
+
+  const handlePointerLeave = () => {
+    const el = heroRef.current
+    if (!el) return
+    el.style.setProperty('--hry', '0deg')
+    el.style.setProperty('--hrx', '0deg')
   }
 
   const stats = [
     { value: profile.experienceYears, label: 'Years experience' },
     { value: experience.length, label: 'Companies' },
-    { value: '20+', label: 'Projects shipped' },
+    { value: profile.appsShipped, label: 'Apps shipped' },
   ]
 
   return (
-    <section id="top" className="hero" ref={heroRef} onPointerMove={handlePointerMove}>
+    <section id="top" className="hero" ref={heroRef} onPointerMove={handlePointerMove} onPointerLeave={handlePointerLeave}>
       <div className="hero__bg" aria-hidden="true">
         <span className="hero__grid-lines" />
         <span className="hero__aurora hero__aurora--a" />
@@ -169,7 +181,7 @@ export default function Hero() {
         <div className="hero__main">
           <p className="hero__badge">
             <span className="hero__pulse" aria-hidden="true" />
-            {profile.status} &middot; Building with AI
+            {profile.status} &middot; Flutter Developer
           </p>
 
           <p className="hero__greeting">Hello, I&rsquo;m</p>
@@ -206,12 +218,16 @@ export default function Hero() {
           </dl>
 
           <div className="hero__social">
-            <a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub">
-              <IconGithub />
-            </a>
-            <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
-              <IconLinkedIn />
-            </a>
+            {profile.github && (
+              <a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+                <IconGithub />
+              </a>
+            )}
+            {profile.linkedin && (
+              <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <IconLinkedIn />
+              </a>
+            )}
             <a href={gmailComposeHref(profile.email)} target="_blank" rel="noreferrer" aria-label="Email">
               <IconMail />
             </a>
@@ -231,10 +247,10 @@ export default function Hero() {
             </div>
 
             <span className="hero__chip hero__chip--ai" aria-hidden="true">
-              <span className="hero__spark">&#10022;</span> LLM integrations
+              <span className="hero__spark">&#10022;</span> Live GPS tracking
             </span>
             <span className="hero__chip hero__chip--api" aria-hidden="true">
-              <span className="hero__dot" /> REST APIs &middot; 200 OK
+              <span className="hero__dot" /> Offline-first &middot; synced
             </span>
           </div>
 
@@ -243,7 +259,7 @@ export default function Hero() {
               <span />
               <span />
               <span />
-              <p>arun@ai-dev: ~</p>
+              <p>gopi@flutter-dev: ~</p>
             </div>
             <div className="hero__terminal-body">
               {terminal.map((text, i) => (

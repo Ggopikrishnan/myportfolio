@@ -223,3 +223,77 @@ textarea {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ---------- 3D tilt cards (driven by useTilt: --rx, --ry, --gx, --gy) ---------- */
+
+.tilt-3d {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/* Extra specificity so a component's own :hover transform can't flatten the tilt. */
+.tilt-3d.reveal--visible,
+.tilt-3d.reveal--visible:hover {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.2s ease;
+}
+
+.tilt-3d.reveal--visible.is-tilting {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(14px);
+  transition: transform 0.12s linear, box-shadow 0.3s ease, border-color 0.2s ease;
+  box-shadow: 0 30px 60px -28px rgba(15, 23, 42, 0.45);
+}
+
+/* Glare that follows the cursor. */
+.tilt-3d::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.4), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tilt-3d.is-tilting::before {
+  opacity: 1;
+}
+
+:root[data-theme='dark'] .tilt-3d::before {
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.1), transparent 55%);
+}
+
+/* Depth layers: inner parts float above the card while it tilts. */
+.tilt-3d .project-thumb,
+.tilt-3d .project-card__name,
+.tilt-3d .project-card__desc,
+.tilt-3d .skill-group__head,
+.tilt-3d .skill-group__chips,
+.tilt-3d .feature-card__dot,
+.tilt-3d.feature-card h3,
+.tilt-3d.feature-card p {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tilt-3d.is-tilting .project-thumb { transform: translateZ(45px); }
+.tilt-3d.is-tilting .project-card__name { transform: translateZ(32px); }
+.tilt-3d.is-tilting .project-card__desc { transform: translateZ(18px); }
+.tilt-3d.is-tilting .skill-group__head { transform: translateZ(50px); }
+.tilt-3d.is-tilting .skill-group__chips { transform: translateZ(28px); }
+.tilt-3d.is-tilting .feature-card__dot { transform: translateZ(70px) scale(1.3); }
+.tilt-3d.feature-card.is-tilting h3 { transform: translateZ(45px); }
+.tilt-3d.feature-card.is-tilting p { transform: translateZ(22px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-3d.reveal--visible,
+  .tilt-3d.reveal--visible:hover,
+  .tilt-3d.reveal--visible.is-tilting {
+    transform: none;
+  }
+
+  .tilt-3d::before {
+    display: none;
+  }
+}

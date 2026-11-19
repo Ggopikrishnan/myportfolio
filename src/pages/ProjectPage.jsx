@@ -12,7 +12,7 @@ export default function ProjectPage() {
     window.scrollTo(0, 0)
     if (project) document.title = `${project.name} · ${profile.name}`
     return () => {
-      document.title = `${profile.name} · Full Stack Developer`
+      document.title = `${profile.name} · ${profile.title}`
     }
   }, [project])
 

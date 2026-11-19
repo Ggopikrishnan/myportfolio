@@ -31,8 +31,8 @@
 .projects-grid {
   margin-top: 28px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
 }
 
 .project-card {
@@ -142,8 +142,216 @@
   outline-offset: 3px;
 }
 
-@media (max-width: 780px) {
+/* Compact cards for the 3-column grid. */
+.project-card {
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.projects-grid .project-thumb--md {
+  height: 150px;
+}
+
+.project-card__name {
+  margin-top: 14px;
+  font-size: 1.05rem;
+}
+
+.project-card__desc {
+  margin-top: 6px;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: none;
+}
+
+/* Description no longer grows, so the tags take the slack and stay aligned at the bottom. */
+.project-card__stack {
+  margin-top: auto;
+  padding-top: 14px;
+  gap: 6px;
+}
+
+.project-card__stack .tag {
+  font-size: 0.72rem;
+  padding: 4px 9px;
+}
+
+.project-card__actions {
+  margin-top: 16px;
+}
+
+.project-card__link,
+.project-card__live {
+  height: 36px;
+  padding: 0 14px;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
   .projects-grid {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* ---------- Entrance animations: 3D flip-up cards ---------- */
+
+/* Heading: eyebrow slides in from the left, title rises, underline grows. */
+.reveal--slide-head {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal--slide-head .eyebrow,
+.reveal--slide-head h2 {
+  opacity: 0;
+}
+
+.reveal--slide-head h2 {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.reveal--slide-head h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 15%, transparent));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.reveal--slide-head.reveal--visible .eyebrow {
+  animation: proj-slide-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal--slide-head.reveal--visible h2 {
+  animation: proj-rise 0.8s 0.12s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal--slide-head.reveal--visible h2::after {
+  animation: proj-underline 0.9s 0.45s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+/* Tabs drop in one after another. */
+.project-tab {
+  animation: proj-tab-drop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation-delay: calc(0.25s + var(--i, 0) * 0.09s);
+}
+
+/* Cards flip up in 3D; the grid is re-keyed per tab so this replays on every filter change. */
+.reveal--flip {
+  opacity: 0;
+  transform: none;
+  transform-origin: 50% 100%;
+}
+
+.reveal--flip.reveal--visible {
+  opacity: 1;
+  animation: proj-flip 0.95s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: var(--d, 0ms);
+}
+
+.reveal--flip .project-thumb img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal--flip.reveal--visible .project-thumb img {
+  animation: proj-img-zoom 1.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: var(--d, 0ms);
+}
+
+.project-card:hover .project-thumb img {
+  transform: scale(1.04);
+}
+
+.reveal--flip.reveal--visible .project-card__stack .tag {
+  animation: proj-tag-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation-delay: calc(var(--d, 0ms) + 0.45s + var(--t, 0) * 0.07s);
+}
+
+
+@keyframes proj-slide-left {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes proj-rise {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes proj-underline {
+  to { transform: scaleX(1); }
+}
+
+@keyframes proj-tab-drop {
+  from { opacity: 0; transform: translateY(-18px) scale(0.85); }
+}
+
+@keyframes proj-flip {
+  from { opacity: 0; transform: perspective(1100px) rotateX(28deg) translateY(70px) scale(0.92); }
+}
+
+@keyframes proj-img-zoom {
+  from { transform: scale(1.25); filter: saturate(0.4); }
+}
+
+@keyframes proj-tag-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.6); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal--slide-head .eyebrow,
+  .reveal--slide-head h2,
+  .reveal--flip {
+    opacity: 1;
+  }
+
+  .reveal--slide-head h2::after {
+    transform: scaleX(1);
+  }
+
+  .project-tab,
+  .reveal--slide-head *,
+  .reveal--slide-head h2::after,
+  .reveal--flip,
+  .reveal--flip * {
+    animation: none !important;
+  }
+}
+
+/* Google Play button: same pill as Live Demo, in Play green. */
+.project-card__play {
+  background: color-mix(in srgb, #01875f 10%, transparent);
+  border-color: color-mix(in srgb, #01875f 30%, transparent);
+  color: #01875f;
+}
+
+.project-card__play:hover {
+  background: #01875f;
+  border-color: #01875f;
+  color: #fff;
+}
+
+:root[data-theme='dark'] .project-card__play {
+  color: #4ade80;
+}
+
+:root[data-theme='dark'] .project-card__play:hover {
+  color: #fff;
 }

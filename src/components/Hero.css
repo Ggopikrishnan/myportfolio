@@ -447,7 +447,7 @@
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: 50% 8%;
   border-radius: 50%;
   border: 4px solid var(--h-bg);
 }
@@ -629,4 +629,25 @@
 
 .hero + .section {
   border-top: 0;
+}
+
+/* ---------- 3D: the orbit system tilts towards the cursor, photo floats in front ---------- */
+
+.hero__visual {
+  perspective: 1200px;
+}
+
+.hero__orbits {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--hrx, 0deg)) rotateY(var(--hry, 0deg));
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero__photo {
+  transform: translate(-50%, -50%) translateZ(70px);
+}
+
+.hero__terminal {
+  transform: rotateX(calc(var(--hrx, 0deg) * 0.6)) rotateY(calc(var(--hry, 0deg) * 0.6)) translateZ(40px);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
