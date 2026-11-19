@@ -1,2 +1,0 @@
-# The Express email backend is deployed separately (e.g. Render); keep it out of the Vercel site.
-server

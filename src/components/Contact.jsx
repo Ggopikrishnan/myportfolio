@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { profile } from '../data/resume'
 import { IconMail, IconPhone, IconLocation, IconArrowRight } from './Icons'
 import { gmailComposeHref } from '../utils/mail'
-import { sendContactMessage } from '../utils/contactApi'
+import { sendEnquiryEmail, isEmailjsConfigured } from '../utils/emailjs'
 import Reveal from './Reveal'
 import './Contact.css'
 
@@ -23,10 +23,7 @@ export default function Contact() {
   const [form, setForm] = useState(EMPTY)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
-  const [errorMsg, setErrorMsg] = useState('')
   const sendingRef = useRef(false)
-  // When the visitor started the form; the server rejects instant (bot) submissions.
-  const startedAtRef = useRef(Date.now())
 
   const update = (field) => (e) => {
     const { value } = e.target
@@ -53,19 +50,22 @@ export default function Contact() {
       return
     }
 
+    if (!isEmailjsConfigured()) {
+      console.error(
+        'EmailJS is not configured: set VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID and VITE_EMAILJS_PUBLIC_KEY.',
+      )
+      setStatus('error')
+      return
+    }
+
     sendingRef.current = true
     setStatus('sending')
-    setErrorMsg('')
     try {
-      await sendContactMessage({ ...trimmed, startedAt: startedAtRef.current })
+      await sendEnquiryEmail(trimmed)
       setStatus('sent')
       setForm(EMPTY)
-      startedAtRef.current = Date.now()
     } catch (err) {
-      console.error('Contact form send failed:', err)
-      if (err.fieldErrors) setErrors(err.fieldErrors)
-      // Validation (400) and rate-limit (429) messages are shown as-is; anything else falls back to direct email.
-      setErrorMsg(err.status === 400 || err.status === 429 ? err.message : '')
+      console.error('EmailJS send failed:', err)
       setStatus('error')
     } finally {
       sendingRef.current = false
@@ -179,8 +179,7 @@ export default function Contact() {
               {status === 'sent' && (
                 <span className="contact-form__sent">Message sent — I&rsquo;ll get back to you soon.</span>
               )}
-              {status === 'error' && errorMsg && <span className="contact-form__error">{errorMsg}</span>}
-              {status === 'error' && !errorMsg && (
+              {status === 'error' && (
                 <span className="contact-form__error">
                   Couldn&rsquo;t send that — email me directly at{' '}
                   <a href={gmailComposeHref(profile.email)} target="_blank" rel="noreferrer">

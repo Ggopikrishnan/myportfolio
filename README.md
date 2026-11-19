@@ -24,18 +24,19 @@ Pages, Hostinger, etc.).
 
 ## Contact form
 
-The Contact section posts to our own **Node.js + Express + Nodemailer** backend in [`server/`](server/),
-which emails each enquiry over SMTP. Setup, environment variables and deployment steps are in
-[`server/README.md`](server/README.md).
+The Contact section sends enquiries with [EmailJS](https://www.emailjs.com/) — no backend needed.
+Messages are delivered to **gopig6581@gmail.com** through the EmailJS service and template.
 
-Local development uses two terminals:
+Set these three variables (see [`.env.example`](.env.example)) in a local `.env` and in
+Vercel → Settings → Environment Variables, then redeploy:
 
-```bash
-cd server && npm install && npm run dev   # API on http://localhost:5000
-npm run dev                               # site on http://localhost:5173 (proxies /api)
+```
+VITE_EMAILJS_SERVICE_ID=...
+VITE_EMAILJS_TEMPLATE_ID=...
+VITE_EMAILJS_PUBLIC_KEY=...
 ```
 
-In production, set `VITE_API_URL` (see [`.env.example`](.env.example)) to the deployed backend URL.
+The template can use: `{{name}}`, `{{company}}`, `{{email}}`, `{{reply_to}}`, `{{message}}`, `{{time}}`, `{{title}}`.
 
 ## Editing content
 
