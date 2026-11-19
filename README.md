@@ -24,10 +24,18 @@ Pages, Hostinger, etc.).
 
 ## Contact form
 
-The "Send an enquiry" form on the Contact section has no backend — submitting it opens the visitor's email
-client with a pre-filled message addressed to the email in [`src/data/resume.js`](src/data/resume.js) (`gopig6581@gmail.com`), via a `mailto:` link. No API keys or server required.
-If you'd rather have messages sent silently in the background (no email client popup), wire the form up to a
-service like [EmailJS](https://www.emailjs.com/) or [Formspree](https://formspree.io/) instead.
+The Contact section posts to our own **Node.js + Express + Nodemailer** backend in [`server/`](server/),
+which emails each enquiry over SMTP. Setup, environment variables and deployment steps are in
+[`server/README.md`](server/README.md).
+
+Local development uses two terminals:
+
+```bash
+cd server && npm install && npm run dev   # API on http://localhost:5000
+npm run dev                               # site on http://localhost:5173 (proxies /api)
+```
+
+In production, set `VITE_API_URL` (see [`.env.example`](.env.example)) to the deployed backend URL.
 
 ## Editing content
 
